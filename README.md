@@ -32,7 +32,8 @@ The database is initialised with the following user setup:
 
 This is a very basic web app and there are many things that would likely be enhanced if it was to be used in a production (live environment). Some of these are listed below:
 
-- the potential use of an MVC framework such as CodeIgniter (good) or Laravel (better)
+- protect your SQL queries against SQL injection (pretty important!)
 - use bootstrap to improve the UI
 - use jQuery for on-page behaviour, unobtrustive validation, etc...
+- the potential use of an MVC framework such as CodeIgniter (good) or Laravel (better)
 - create a simple installation script which checks whether the tables are already created in the database and if they are not, it runs the table creation and data seeding SQL commands.
