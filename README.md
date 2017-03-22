@@ -6,6 +6,6 @@ This script is for students at Bucks New Uni learning PHP in the "Open Source Sy
 
 The database is initialised with the following user setup:
 
-Student ID: 20000000- 
-Password: test
+- Student ID: 20000000
+- Password: test
 
