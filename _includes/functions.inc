@@ -1,5 +1,7 @@
 <?php
 
+include "passwordLib.php";
+
 /**
  * Validate Login function
  *
