@@ -21,5 +21,5 @@
    }
 
    echo template("templates/partials/footer.php");
-
+   // test
 ?>
