@@ -4,35 +4,37 @@ include("_includes/config.inc");
 include("_includes/dbconnect.inc");
 include("_includes/functions.inc");
 
-// Handle file upload
-$imagePath = '';
-if (isset($_FILES['image']) && $_FILES['image']['error'] == 0) {
-    // Validate file type (for example, only jpg and png)
-    $allowedTypes = ['image/jpeg' => 'jpg', 'image/png' => 'png'];
-    if (array_key_exists($_FILES['image']['type'], $allowedTypes)) {
-        // Create a unique file name and save the file
-        $fileExtension = $allowedTypes[$_FILES['image']['type']];
-        $fileName = uniqid('img_', true) . '.' . $fileExtension;
-        $imagePath = 'uploads/' . $fileName; // Ensure the 'uploads' directory exists and is writable
-        move_uploaded_file($_FILES['image']['tmp_name'], $imagePath);
+// Check if the form was submitted
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    // Fetch and sanitize input data
+    $studentid = $conn->real_escape_string($_POST['studentid']);
+    $password = $conn->real_escape_string($_POST['password']);
+    // Assume password will be hashed before storage
+    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $dob = $conn->real_escape_string($_POST['dob']);
+    $firstname = $conn->real_escape_string($_POST['firstname']);
+    $lastname = $conn->real_escape_string($_POST['lastname']);
+    $house = $conn->real_escape_string($_POST['house']);
+    $town = $conn->real_escape_string($_POST['town']);
+    $county = $conn->real_escape_string($_POST['county']);
+    $country = $conn->real_escape_string($_POST['country']);
+    $postcode = $conn->real_escape_string($_POST['postcode']);
+
+    // Prepare SQL statement to insert data
+    $stmt = $conn->prepare("INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("ssssssssss", $studentid, $hashedPassword, $dob, $firstname, $lastname, $house, $town, $county, $country, $postcode);
+    
+    // Execute the prepared statement
+    if ($stmt->execute()) {
+        echo "New record created successfully";
     } else {
-        echo "Invalid file type.";
-        exit;
+        echo "Error: " . $stmt->error;
     }
-}
 
-// Existing validation and sanitization code...
-
-// Modified SQL statement to include the image_path
-$sql = "INSERT INTO student (studentid, password, dob, firstname, lastname, house, town, county, country, postcode, image_path) VALUES ('$studentid', '$password', '$dob', '$firstname', '$lastname', '$house', '$town', '$county', '$country', '$postcode', '$imagePath')";
-
-// Execute SQL
-if ($conn->query($sql) === TRUE) {
-    echo "New student added successfully.";
+    // Close statement
+    $stmt->close();
 } else {
-    echo "Error: " . $sql . "<br>" . $conn->error;
+    echo "Invalid request method.";
 }
-
-$conn->close();
 
 ?>
