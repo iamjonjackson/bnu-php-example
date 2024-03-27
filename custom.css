@@ -146,3 +146,28 @@ body {
     display: inline-block;
     margin-right: 10px;
   }
+
+  /* Main Navigation Styles */
+#main-nav {
+  background-color: #333; /* Dark background */
+  color: #fff; /* White text */
+  padding: 1rem; /* Padding around the nav */
+  text-align: center; /* Center the navigation links */
+}
+
+#main-nav a {
+  color: #ddd; /* Light grey text for links */
+  text-decoration: none; /* Remove underline from links */
+  margin: 0 10px; /* Space out the links */
+  font-weight: bold; /* Make the link text bold */
+  transition: color 0.3s ease-in-out; /* Smooth transition for hover effect */
+}
+
+#main-nav a:hover {
+  color: #4CAF50; /* Change link color on hover */
+}
+
+/* Add a custom style for the current/active page link if needed */
+#main-nav a.active {
+  color: #ff6347; /* Highlight color for the active page */
+}
